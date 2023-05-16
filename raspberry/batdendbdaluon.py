@@ -65,9 +65,10 @@ def batquat():
         
     print(kiemtraquat())
 def on_data_change_other(event):
-    device_name = os.path.basename(os.path.dirname(event.path))
+    device_name = event.path.split('/')[-2]
     print(device_name)
     print('Data changed:', event.data)
+    print("hello")
     if(device_name=="device1"):
         batden(event.data)
     if(device_name=="device2"):
@@ -78,7 +79,9 @@ def on_data_change_other(event):
     #     batquat(event.data) 
 def on_data_change_quat(event):
     
-    device_name = os.path.basename(os.path.dirname(event.path))
+    device_name = event.path.split('/')[-2]
+    # print(device_name)
+    # print('Data changed:', event.data)
     if(device_name=="device4"):
         batquat()
 
@@ -104,45 +107,58 @@ def on_data_change_audio(event):
     if "quat" in string:
         
         
-        refup = db.reference('devices/device4')
+        device_name = 'device4'
+        refup = db.reference(f'devices/{device_name}')
         if "bat" in string:
-            refup.update({'status': 1})
+            refup.child('status').set(1)
             
             
             
         elif "tat" in string:
-            refup.update({'status': 0})
+            refup.child('status').set(0)
             
            
-        elif "tang toc do" in string:
-            refup.update({'speed': 1})
+        elif "tangtocdo" in string:
+            refup.child('speed').set(1)
         else: 
-            refup.update({'speed': 0})
+            refup.child('speed').set(0)
         
     elif "cua" in string:
-        refup = db.reference('devices/device2')
-        if "dong" in string:
-            refup.update({'status': 0})
-        elif "mo" in string:
-            refup.update({'status': 1})
-        else: 
-            refup.update({'status': 0})
+        device_name = 'device2'
+        refup = db.reference(f'devices/{device_name}')
+        if "mo" in string:
+            refup.child('status').set(1)
+            
+            
+            
+        elif "dong" in string:
+            refup.child('status').set(0)
+        else:
+            refup.child('status').set(1)
     elif "den" in string:
-        refup = db.reference('devices/device1')
-        if "tat" in string:
-            refup.update({'status': 0})
-        elif "bat" in string:
-            refup.update({'status': 1})
-        else: 
-            refup.update({'status': 1})
+        device_name = 'device1'
+        refup = db.reference(f'devices/{device_name}')
+        if "bat" in string:
+            refup.child('status').set(1)
+            
+            
+            
+        elif "tat" in string:
+            refup.child('status').set(0)
+        else:
+            refup.child('status').set(1)
     elif "dieuhoa" in string:
-        refup = db.reference('devices/device3')
-        if "tat" in string:
-            refup.update({'status': 0})
-        elif "bat" in string:
-            refup.update({'status': 1})
-        else: 
-            refup.update({'status': 1})    
+        device_name = 'device3'
+        refup = db.reference(f'devices/{device_name}')
+        if "bat" in string:
+            refup.child('status').set(1)
+            
+            
+            
+        elif "tat" in string:
+            refup.child('status').set(0)
+        else:
+            refup.child('status').set(1)   
     else:
         print('not found')
     
