@@ -79,6 +79,7 @@ def remove_sil(path_in, path_out, format="wav"):
 
 def predict():
     model = tf.keras.models.load_model('CNN.h5')
+    # model = tf.keras.models.load_model('CNNs.h5')
     string = ['batden', 'batdieuhoa', 'batquat', 'dongcua', 'giamtocdoquat', 'mocua', 'tangtocdoquat', 'tatden', 'tatdieuhoa', 'tatquat']
     commands = np.array(string)
     record()
